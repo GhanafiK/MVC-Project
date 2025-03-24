@@ -1,4 +1,5 @@
 using DataAccessLayer.Data.Contexts;
+using DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer
@@ -17,6 +18,7 @@ namespace PresentationLayer
                                                                     builder.Configuration.GetConnectionString("DefaultConnection")
                                                                     )
                                                                 );
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             #endregion
 
             var app = builder.Build();

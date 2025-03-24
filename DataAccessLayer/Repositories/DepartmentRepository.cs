@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class DepartmentRepository(ApplicationDbContext _dbContext)
+    public class DepartmentRepository(ApplicationDbContext _dbContext) : IDepartmentRepository
     {
-        public IEnumerable<Department> GetAll(bool WithTracking=false)
+        public IEnumerable<Department> GetAll(bool WithTracking = false)
         {
-            if(WithTracking)
+            if (WithTracking)
             {
                 return _dbContext.Departments.ToList();
             }
@@ -21,7 +21,7 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public Department? GetDepartmentById(int id)=> _dbContext.Departments.Find(id);
+        public Department? GetDepartmentById(int id) => _dbContext.Departments.Find(id);
 
         public int Update(Department department)
         {
