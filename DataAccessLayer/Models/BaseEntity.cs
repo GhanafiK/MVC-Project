@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-    internal class BaseEntity
+    public class BaseEntity
     {
         public int Id { get; set; } // PK
         public int CreatedBy { get; set; } //refere to useer Id
