@@ -1,6 +1,7 @@
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Data.Contexts;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.Classes;
+using DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer

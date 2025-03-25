@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccessLayer.Models.Shared;
+using DataAccessLayer.Models.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

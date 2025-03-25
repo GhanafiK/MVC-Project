@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models.Employees
+namespace DataAccessLayer.Models.Shared.Enums
 {
     public enum Gender
     {
-        Male=1,
-        Female=2,
+        Male = 1,
+        Female = 2,
     }
 }

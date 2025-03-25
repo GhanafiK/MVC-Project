@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models.Employees;
+using DataAccessLayer.Models.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

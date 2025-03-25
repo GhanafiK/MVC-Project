@@ -1,6 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Factories;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
