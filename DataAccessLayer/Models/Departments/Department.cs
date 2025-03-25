@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Models.Departments
 {
-    public class Department:BaseEntity
+    public class Department : BaseEntity
     {
         public string Name { get; set; } = null!;
         public string Code { get; set; } = null!;
