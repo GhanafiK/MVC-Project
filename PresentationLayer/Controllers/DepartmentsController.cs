@@ -11,6 +11,8 @@ namespace PresentationLayer.Controllers
             var departments = _departmentService.GetAllDepartments();
             return View(departments);
         }
+
+        #region Create Department
         public IActionResult Create()
         {
             return View();
@@ -19,7 +21,7 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult Create(CreatedDepartmentDTO data)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -39,6 +41,19 @@ namespace PresentationLayer.Controllers
             }
             return View(data);
         }
+        #endregion
+
+        #region Details Of Department
+
+        public IActionResult Details(int? id)
+        {
+            if (id is null) return BadRequest();
+            var department=_departmentService.GetDepartmentById(id.Value);
+            if (department is null) return NotFound();
+            return View(department);
+        }
+
+        #endregion
     }
 
 }
