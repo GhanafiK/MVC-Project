@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DTOs
 {
-    internal class DepartmentDetailsDTO
+    public class DepartmentDetailsDTO
     {
         public int Id { get; set; } // PK
         public int CreatedBy { get; set; } //refere to useer Id

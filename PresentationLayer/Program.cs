@@ -1,3 +1,4 @@
+using BusinessLogicLayer.Services;
 using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace PresentationLayer
                                                                     )
                                                                 );
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             #endregion
 
             var app = builder.Build();

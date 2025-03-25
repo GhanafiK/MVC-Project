@@ -2,7 +2,7 @@
 
 namespace BusinessLogicLayer.Services
 {
-    internal interface IDepartmentService
+    public interface IDepartmentService
     {
         int AddDepartment(CreatedDepartmentDTO departmentDto);
         bool DeleteDepartment(int id);

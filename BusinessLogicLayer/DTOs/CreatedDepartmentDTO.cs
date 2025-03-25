@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DTOs
 {
-    internal class CreatedDepartmentDTO
+    public class CreatedDepartmentDTO
     {
         public DateOnly DateOfCreation { get; set; }
         public string Name { get; set; } = string.Empty;

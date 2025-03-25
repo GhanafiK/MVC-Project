@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DTOs
 {
-    internal class UpdatedDepartmentDTO
+    public class UpdatedDepartmentDTO
     {
         public int Id { get; set; }
         public DateOnly DateOfCreation { get; set; }

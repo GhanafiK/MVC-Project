@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
 {
-    class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
+    public class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
     {
         public IEnumerable<DepartmentDTO> GetAllDepartments()
         {
