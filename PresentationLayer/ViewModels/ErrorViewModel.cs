@@ -1,4 +1,4 @@
-namespace PresentationLayer.Models
+namespace PresentationLayer.ViewModels
 {
     public class ErrorViewModel
     {
