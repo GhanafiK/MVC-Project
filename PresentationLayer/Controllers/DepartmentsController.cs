@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
-using BusinessLogicLayer.Services;
+using BusinessLogicLayer.DTOs.DepartmentDTOs;
+using BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.ViewModels.DepartmentViewModels;
 

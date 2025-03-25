@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models.Shared;
+﻿using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
 using System;
 using System.Collections.Generic;
@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models.Employees
+namespace BusinessLogicLayer.DTOs.EmployeeDTOs
 {
-    public class Employee:BaseEntity
+    public class UpdatedEmployeeDTO
     {
-        public string Name { get; set; } = null!;
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Age { get; set; }
         public string? Address { get; set; }
         public bool IsActive { get; set; }
@@ -20,5 +21,7 @@ namespace DataAccessLayer.Models.Employees
         public DateTime HiringDate { get; set; }
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
+        public int CreatedBy { get; set; }
+        public int LastModifiedBy { get; set; }
     }
 }

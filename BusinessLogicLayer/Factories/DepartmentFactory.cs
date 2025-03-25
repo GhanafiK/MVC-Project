@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs.DepartmentDTOs;
 using DataAccessLayer.Models.Departments;
 using System;
 using System.Collections.Generic;

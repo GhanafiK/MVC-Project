@@ -1,5 +1,6 @@
-﻿using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs.DepartmentDTOs;
 using BusinessLogicLayer.Factories;
+using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.Services
+namespace BusinessLogicLayer.Services.Classes
 {
     public class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
     {
