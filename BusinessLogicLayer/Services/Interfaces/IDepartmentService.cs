@@ -1,8 +1,8 @@
-﻿using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs.DepartmentDTOs;
 
-namespace BusinessLogicLayer.Services
+namespace BusinessLogicLayer.Services.Interfaces
 {
-    internal interface IDepartmentService
+    public interface IDepartmentService
     {
         int AddDepartment(CreatedDepartmentDTO departmentDto);
         bool DeleteDepartment(int id);

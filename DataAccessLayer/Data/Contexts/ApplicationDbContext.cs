@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccessLayer.Models.Departments;
+using DataAccessLayer.Models.Employees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,5 +22,6 @@ namespace DataAccessLayer.Data.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }

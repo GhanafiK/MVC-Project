@@ -1,5 +1,8 @@
+using BusinessLogicLayer.Services.Classes;
+using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Contexts;
-using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.Classes;
+using DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer
@@ -19,6 +22,10 @@ namespace PresentationLayer
                                                                     )
                                                                 );
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
             #endregion
 
             var app = builder.Build();

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.DTOs
+namespace BusinessLogicLayer.DTOs.DepartmentDTOs
 {
-    internal class CreatedDepartmentDTO
+    public class UpdatedDepartmentDTO
     {
+        public int Id { get; set; }
         public DateOnly DateOfCreation { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.DTOs
+namespace BusinessLogicLayer.DTOs.DepartmentDTOs
 {
-    internal class DepartmentDetailsDTO
+    public class DepartmentDetailsDTO
     {
         public int Id { get; set; } // PK
         public int CreatedBy { get; set; } //refere to useer Id

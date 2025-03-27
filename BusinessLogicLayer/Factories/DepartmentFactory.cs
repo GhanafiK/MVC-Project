@@ -1,5 +1,5 @@
-﻿using BusinessLogicLayer.DTOs;
-using DataAccessLayer.Models;
+﻿using BusinessLogicLayer.DTOs.DepartmentDTOs;
+using DataAccessLayer.Models.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
