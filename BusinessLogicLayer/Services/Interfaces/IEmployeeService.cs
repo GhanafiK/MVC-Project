@@ -6,7 +6,7 @@ namespace BusinessLogicLayer.Services.Interfaces
     {
         int AddEmployee(CreateEmployeeDTO createEmployeeDTO);
         bool DeleteEmployee(int id);
-        IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking);
+        IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking=false);
         EmployeeDetailsDTO? GetEmployeeById(int id);
         int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO);
     }
