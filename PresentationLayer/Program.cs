@@ -1,3 +1,4 @@
+using BusinessLogicLayer.Profiles;
 using BusinessLogicLayer.Services.Classes;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Contexts;
@@ -25,6 +26,8 @@ namespace PresentationLayer
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
+            //builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             #endregion
 

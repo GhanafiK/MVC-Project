@@ -1,6 +1,8 @@
-﻿using BusinessLogicLayer.DTOs.EmployeeDTOs;
+﻿using AutoMapper;
+using BusinessLogicLayer.DTOs.EmployeeDTOs;
 using BusinessLogicLayer.Factories;
 using BusinessLogicLayer.Services.Interfaces;
+using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Repositories.Classes;
 using DataAccessLayer.Repositories.Interfaces;
 using System;
@@ -11,34 +13,36 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.Classes
 {
-    public class EmployeeService(IEmployeeRepository _employeeRepository) : IEmployeeService
+    public class EmployeeService(IEmployeeRepository _employeeRepository,IMapper _mapper) : IEmployeeService
     {
-        public IEnumerable<EmployeeDTO> GetAllEmployees()
+        public IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking=false)
         {
-            var Employees = _employeeRepository.GetAll();
-            return Employees.Select(E => E.ToEmployeeDTO());
+            var Employees = _employeeRepository.GetAll(withTracking);
+            var EmployeesDTO = _mapper.Map<IEnumerable<Employee>,IEnumerable<EmployeeDTO>>(Employees);
+            return EmployeesDTO;
         }
 
         public EmployeeDetailsDTO? GetEmployeeById(int id)
         {
             var Employee = _employeeRepository.GetDepartmentById(id);
-            return Employee.ToEmployeeDetailsDTO();
+            return Employee is null ? null : _mapper.Map<Employee, EmployeeDetailsDTO>(Employee);
         }
-
-        public int AddEmployee(CreateEmployeeDTO createEmployeeDTO) => _employeeRepository.Add(createEmployeeDTO.ToEntity());
-
-        public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO) => _employeeRepository.Update(updatedEmployeeDTO.ToEntity());
-
         public bool DeleteEmployee(int id)
         {
             var Employee = _employeeRepository.GetDepartmentById(id);
             if (Employee is null) return false;
             else
             {
-                int Result = _employeeRepository.Remove(Employee);
-                return Result > 0 ? true : false;
+                Employee.IsDeleted = true;
+                return _employeeRepository.Update(Employee)>0?true:false;
             }
 
         }
+
+        public int AddEmployee(CreateEmployeeDTO createEmployeeDTO)=> _employeeRepository.Add(_mapper.Map<CreateEmployeeDTO,Employee>(createEmployeeDTO));
+        
+
+        public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO)=> _employeeRepository.Update(_mapper.Map<UpdatedEmployeeDTO,Employee>(updatedEmployeeDTO));
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.DTOs.EmployeeDTOs;
+﻿ using BusinessLogicLayer.DTOs.EmployeeDTOs;
 
 namespace BusinessLogicLayer.Services.Interfaces
 {
@@ -6,7 +6,7 @@ namespace BusinessLogicLayer.Services.Interfaces
     {
         int AddEmployee(CreateEmployeeDTO createEmployeeDTO);
         bool DeleteEmployee(int id);
-        IEnumerable<EmployeeDTO> GetAllEmployees();
+        IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking);
         EmployeeDetailsDTO? GetEmployeeById(int id);
         int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO);
     }
