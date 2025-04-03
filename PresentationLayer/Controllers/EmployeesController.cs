@@ -42,6 +42,13 @@ namespace PresentationLayer.Controllers
         }
         #endregion
 
-      
+        #region Details of Employee
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+            var Employee= _employeeService.GetEmployeeById(id.Value);
+            return Employee is null ? NotFound() : View(Employee);
+        }
+        #endregion
     }
 }
