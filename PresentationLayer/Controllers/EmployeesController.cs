@@ -20,6 +20,7 @@ namespace PresentationLayer.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public IActionResult Create(CreateEmployeeDTO data)
         {
             if (ModelState.IsValid)

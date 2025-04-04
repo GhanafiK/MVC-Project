@@ -4,6 +4,7 @@ using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Repositories.Classes;
 using DataAccessLayer.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer
@@ -16,7 +17,10 @@ namespace PresentationLayer
 
 
             #region Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
             builder.Services.AddDbContext<ApplicationDbContext>(options=>
                                                                 options.UseSqlServer(
                                                                     builder.Configuration.GetConnectionString("DefaultConnection")
