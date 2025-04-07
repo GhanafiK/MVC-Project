@@ -17,11 +17,11 @@ namespace DataAccessLayer.Repositories.Classes
         {
             if (WithTracking)
             {
-                return _dbContext.Set<T>().ToList();
+                return _dbContext.Set<T>().Where(E=>E.IsDeleted!=true).ToList();
             }
             else
             {
-                return _dbContext.Set<T>().AsNoTracking().ToList();
+                return _dbContext.Set<T>().Where(E => E.IsDeleted != true).AsNoTracking().ToList();
             }
         }
 
