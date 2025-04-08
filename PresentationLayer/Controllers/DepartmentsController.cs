@@ -35,10 +35,15 @@ namespace PresentationLayer.Controllers
                         Name = model.Name,
                     };
                     int Result = _departmentService.AddDepartment(CreatedDepartment);
+                    string msg;
                     if (Result > 0)
-                        return RedirectToAction(nameof(Index));
+                        msg = $"Department {model.Name} is created Successfully";
+
                     else
-                        ModelState.AddModelError(string.Empty, "Can't Add Department");
+                        msg = $"Department is not created";
+
+                    TempData["message"] = msg;
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {

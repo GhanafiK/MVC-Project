@@ -47,10 +47,14 @@ namespace PresentationLayer.Controllers
                     #endregion
 
                     int Result = _employeeService.AddEmployee(CreatedEmployeeDTO);
+                    string msg;
                     if (Result > 0)
-                        return RedirectToAction(nameof(Index));
+                        msg = $"Employee {CreatedEmployeeDTO.Name} is Added Successfully ";
+                    
                     else
-                        ModelState.AddModelError(string.Empty, "Can't Add Employee");
+                        msg = $"Employee is not Added ";
+                    TempData["EmpMessage"] = msg;
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
