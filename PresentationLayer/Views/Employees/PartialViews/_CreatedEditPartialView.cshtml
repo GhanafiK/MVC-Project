@@ -1,6 +1,15 @@
-﻿@using PresentationLayer.ViewModels.EmployeeViewModels
+﻿@using BusinessLogicLayer.Services.Interfaces
+
+
 @model EmployeeViewModel
-<div class="form-group mb-3 col-6">
+
+@inject IDepartmentService _departmentService
+@{
+    var Departments = new SelectList(_departmentService.GetAllDepartments(), nameof(DepartmentDTO.Id), nameof(DepartmentDTO.Name));
+}
+
+
+<div class="form-group mb-3 col-12">
     <label class="form-label" asp-for="Name"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
@@ -35,6 +44,15 @@
     <input asp-for="Salary" class="form-control" />
     <span asp-validation-for="Salary" class="text-danger"></span>
 </div>
+
+<div class="form-group mb-3 col-6">
+    <label asp-for="DepartmentId" class="form-label"></label>
+    <select class="form-control" asp-items="@Departments" asp-for="DepartmentId">
+        <option value="@null">Choose Department</option>
+    </select>
+    <span asp-validation-for="EmployeeType" class="text-danger"></span>
+</div>
+
 
 <div class="form-group mb-3 col-6">
     <label asp-for="EmployeeType" class="form-label"></label>

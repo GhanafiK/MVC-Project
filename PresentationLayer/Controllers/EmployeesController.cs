@@ -22,31 +22,32 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create(CreateEmployeeDTO CreatedEmployeeDTO)
+        public IActionResult Create(EmployeeViewModel CreatedEmployeeDTO)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     #region For partial View
-                    //var createdEmployee=new CreateEmployeeDTO()
-                    //{
-                    //    Name = CreatedEmployeeDTO.Name,
-                    //    Address = CreatedEmployeeDTO.Address,
-                    //    Age = CreatedEmployeeDTO.Age,
-                    //    Email = CreatedEmployeeDTO.Email,
-                    //    EmployeeType = CreatedEmployeeDTO.EmployeeType,
-                    //    Gender = moCreatedEmployeeDTOdel.Gender,
-                    //    HiringDate = CreatedEmployeeDTO.HiringDate,
-                    //    IsActive = CreatedEmployeeDTO.IsActive,
-                    //    PhoneNumber = CreatedEmployeeDTO.PhoneNumber,
-                    //    Salary = CreatedEmployeeDTO.Salary   
+                    var createdEmployee = new CreateEmployeeDTO()
+                    {
+                        Name = CreatedEmployeeDTO.Name,
+                        Address = CreatedEmployeeDTO.Address,
+                        Age = CreatedEmployeeDTO.Age,
+                        Email = CreatedEmployeeDTO.Email,
+                        EmployeeType = CreatedEmployeeDTO.EmployeeType,
+                        Gender = CreatedEmployeeDTO.Gender,
+                        HiringDate = CreatedEmployeeDTO.HiringDate,
+                        IsActive = CreatedEmployeeDTO.IsActive,
+                        PhoneNumber = CreatedEmployeeDTO.PhoneNumber,
+                        Salary = CreatedEmployeeDTO.Salary,
+                        DepartmentId = CreatedEmployeeDTO.DepartmentId,
 
-                    //}; 
-                    // int Result = _employeeService.AddEmployee(createdEmployee);
+                    };
+                    int Result = _employeeService.AddEmployee(createdEmployee);
                     #endregion
 
-                    int Result = _employeeService.AddEmployee(CreatedEmployeeDTO);
+                    //int Result = _employeeService.AddEmployee(CreatedEmployeeDTO);
                     string msg;
                     if (Result > 0)
                         msg = $"Employee {CreatedEmployeeDTO.Name} is Added Successfully ";
@@ -83,24 +84,8 @@ namespace PresentationLayer.Controllers
             if(!id.HasValue) return BadRequest();
             var Employee=_employeeService.GetEmployeeById(id.Value);
             #region For partial View
-            //return Employee is null ? NotFound() : View(new EmployeeViewModel()
-            //{
-            //    Address = Employee.Address,
-            //    Age = Employee.Age,
-            //    Email = Employee.Email,
-            //    HiringDate= Employee.HiringDate,
-            //    IsActive= Employee.IsActive,
-            //    Name= Employee.Name,
-            //    PhoneNumber= Employee.PhoneNumber,
-            //    Salary= Employee.Salary,
-            //    EmployeeType=Enum.Parse<EmployeeType>(Employee.EmployeeType),
-            //    Gender=Enum.Parse<Gender>(Employee.Gender)
-            //}); 
-            #endregion
-
-            return Employee is null ? NotFound() : View(new UpdatedEmployeeDTO()
+            return Employee is null ? NotFound() : View(new EmployeeViewModel()
             {
-                Id = Employee.Id,
                 Address = Employee.Address,
                 Age = Employee.Age,
                 Email = Employee.Email,
@@ -110,41 +95,59 @@ namespace PresentationLayer.Controllers
                 PhoneNumber = Employee.PhoneNumber,
                 Salary = Employee.Salary,
                 EmployeeType = Enum.Parse<EmployeeType>(Employee.EmployeeType),
-                Gender = Enum.Parse<Gender>(Employee.Gender)
+                DepartmentId = Employee.DepartmentId,
+                Gender = Enum.Parse<Gender>(Employee.Gender),
             });
+            #endregion
+
+            //return Employee is null ? NotFound() : View(new UpdatedEmployeeDTO()
+            //{
+            //    Id = Employee.Id,
+            //    Address = Employee.Address,
+            //    Age = Employee.Age,
+            //    Email = Employee.Email,
+            //    HiringDate = Employee.HiringDate,
+            //    IsActive = Employee.IsActive,
+            //    Name = Employee.Name,
+            //    PhoneNumber = Employee.PhoneNumber,
+            //    Salary = Employee.Salary,
+            //    EmployeeType = Enum.Parse<EmployeeType>(Employee.EmployeeType),
+            //    Gender = Enum.Parse<Gender>(Employee.Gender)
+            //});
         }
 
         [HttpPost]
-        public IActionResult Edit( [FromRoute]int? id, UpdatedEmployeeDTO updatedEmployeeDTO)
+        public IActionResult Edit( [FromRoute]int? id, EmployeeViewModel updatedEmployeeDTO)
         {
 
             #region For partial view
-            //if(!id.HasValue) return BadRequest(); 
+            if (!id.HasValue) return BadRequest();
             #endregion
-            if (!id.HasValue || id != updatedEmployeeDTO.Id) return BadRequest();
+            //if (!id.HasValue || id != updatedEmployeeDTO.Id) return BadRequest();
             if (ModelState.IsValid)
             {
                 try
                 {
                     #region For partial view
-                    //var UpdatedEmployee = new UpdatedEmployeeDTO()
-                    //{
-                    //    Salary = updatedEmployeeDTO.Salary,
-                    //    PhoneNumber = updatedEmployeeDTO.PhoneNumber,
-                    //    IsActive = updatedEmployeeDTO.IsActive,
-                    //    Name = updatedEmployeeDTO.Name,
-                    //    HiringDate = updatedEmployeeDTO.HiringDate,
-                    //    Gender = updatedEmployeeDTO.Gender,
-                    //    EmployeeType = updatedEmployeeDTO.EmployeeType,
-                    //    Address = updatedEmployeeDTO.Address,
-                    //    Age = updatedEmployeeDTO.Age,
-                    //    Email = updatedEmployeeDTO.Email,
-                    //    Id =id.Value,
-                    //}; 
+                    var UpdatedEmployee = new UpdatedEmployeeDTO()
+                    {
+                        Salary = updatedEmployeeDTO.Salary,
+                        PhoneNumber = updatedEmployeeDTO.PhoneNumber,
+                        IsActive = updatedEmployeeDTO.IsActive,
+                        Name = updatedEmployeeDTO.Name,
+                        HiringDate = updatedEmployeeDTO.HiringDate,
+                        Gender = updatedEmployeeDTO.Gender,
+                        EmployeeType = updatedEmployeeDTO.EmployeeType,
+                        Address = updatedEmployeeDTO.Address,
+                        Age = updatedEmployeeDTO.Age,
+                        Email = updatedEmployeeDTO.Email,
+                        Id = id.Value,
+                        DepartmentId= updatedEmployeeDTO.DepartmentId,
+                    };
 
-                    //var Result = _employeeService.UpdateEmployee(UpdatedEmployee);
+                    var Result = _employeeService.UpdateEmployee(UpdatedEmployee);
                     #endregion
-                    var Result =_employeeService.UpdateEmployee(updatedEmployeeDTO);
+                    //var Result =_employeeService.UpdateEmployee(updatedEmployeeDTO);
                     if (Result > 0)
                         return RedirectToAction(nameof(Index));
                     else

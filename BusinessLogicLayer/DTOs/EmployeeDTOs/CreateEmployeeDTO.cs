@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Models.Employees;
+﻿using DataAccessLayer.Models.Departments;
+using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
 using System;
 using System.Collections.Generic;
@@ -34,5 +35,7 @@ namespace BusinessLogicLayer.DTOs.EmployeeDTOs
         public Gender Gender { get; set; }
         [Display(Name = "Employee Type")]
         public EmployeeType EmployeeType { get; set; }
+
+        public int? DepartmentId { get; set; }
     }
 }
