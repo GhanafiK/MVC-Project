@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Models.Shared;
+﻿using DataAccessLayer.Models.Employees;
+using DataAccessLayer.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace DataAccessLayer.Models.Departments
         public string Name { get; set; } = null!;
         public string Code { get; set; } = null!;
         public string? Description { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }=new HashSet<Employee>();
     }
 }
