@@ -43,6 +43,17 @@ namespace BusinessLogicLayer.Services.Classes
         
 
         public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO)=> _employeeRepository.Update(_mapper.Map<UpdatedEmployeeDTO,Employee>(updatedEmployeeDTO));
-        
+
+        public IEnumerable<EmployeeDTO> GetAllEmployees(string? EmployeeSearchName)
+        {
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrEmpty(EmployeeSearchName))
+                employees = _employeeRepository.GetAll();
+            else
+                employees = _employeeRepository.GetAll(E=>E.Name.ToLower().Contains(EmployeeSearchName.ToLower())).Where(E=>E.IsDeleted!=true);
+
+            var EmployeesDTO = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDTO>>(employees);
+            return EmployeesDTO;
+        }
     }
 }
