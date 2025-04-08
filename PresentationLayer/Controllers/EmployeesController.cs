@@ -4,6 +4,7 @@ using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
 using Microsoft.AspNetCore.Mvc;
+using PresentationLayer.ViewModels.EmployeeViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PresentationLayer.Controllers
@@ -21,13 +22,28 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create(CreateEmployeeDTO data)
+        public IActionResult Create(EmployeeViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int Result = _employeeService.AddEmployee(data);
+                    var CreatedEmployee=new CreateEmployeeDTO()
+                    {
+                        Name = model.Name,
+                        Address = model.Address,
+                        Age = model.Age,
+                        Email = model.Email,
+                        EmployeeType = model.EmployeeType,
+                        Gender = model.Gender,
+                        HiringDate = model.HiringDate,
+                        IsActive = model.IsActive,
+                        PhoneNumber = model.PhoneNumber,
+                        Salary = model.Salary   
+                        
+                    };
+
+                    int Result = _employeeService.AddEmployee(CreatedEmployee);
                     if (Result > 0)
                         return RedirectToAction(nameof(Index));
                     else
@@ -41,7 +57,7 @@ namespace PresentationLayer.Controllers
                         _logger.LogError(ex.Message);
                 }
             }
-            return View(data);
+            return View(model);
         }
         #endregion
 
@@ -59,9 +75,8 @@ namespace PresentationLayer.Controllers
         {
             if(!id.HasValue) return BadRequest();
             var Employee=_employeeService.GetEmployeeById(id.Value);
-            return Employee is null ? NotFound() : View(new UpdatedEmployeeDTO()
+            return Employee is null ? NotFound() : View(new EmployeeViewModel()
             {
-                Id = Employee.Id,
                 Address = Employee.Address,
                 Age = Employee.Age,
                 Email = Employee.Email,
@@ -76,14 +91,28 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit( [FromRoute]int? id,UpdatedEmployeeDTO updatedEmployeeDTO)
+        public IActionResult Edit( [FromRoute]int? id, EmployeeViewModel model)
         {
-            if(!id.HasValue || id!=updatedEmployeeDTO.Id) return BadRequest();
+            if(!id.HasValue) return BadRequest();
             if(ModelState.IsValid)
             {
                 try
                 {
-                    var Result=_employeeService.UpdateEmployee(updatedEmployeeDTO);
+                    var UpdatedEmployee = new UpdatedEmployeeDTO()
+                    {
+                        Salary = model.Salary,
+                        PhoneNumber = model.PhoneNumber,
+                        IsActive = model.IsActive,
+                        Name = model.Name,
+                        HiringDate = model.HiringDate,
+                        Gender = model.Gender,
+                        EmployeeType = model.EmployeeType,
+                        Address = model.Address,
+                        Age = model.Age,
+                        Email = model.Email,
+                        Id =id.Value,
+                    };
+                    var Result=_employeeService.UpdateEmployee(UpdatedEmployee);
                     if (Result > 0)
                         return RedirectToAction(nameof(Index));
                     else
@@ -98,7 +127,7 @@ namespace PresentationLayer.Controllers
                 }
 
             }
-            return View(updatedEmployeeDTO);
+            return View(model);
         }
         #endregion
 

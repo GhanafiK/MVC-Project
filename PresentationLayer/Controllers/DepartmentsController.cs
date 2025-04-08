@@ -21,13 +21,20 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreatedDepartmentDTO data)
+        public IActionResult Create(DepartmentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int Result = _departmentService.AddDepartment(data);
+                    var CreatedDepartment = new CreatedDepartmentDTO()
+                    {
+                        Code = model.Code,
+                        DateOfCreation = model.DateOfCreation,
+                        Description = model.Description,
+                        Name = model.Name,
+                    };
+                    int Result = _departmentService.AddDepartment(CreatedDepartment);
                     if (Result > 0)
                         return RedirectToAction(nameof(Index));
                     else
@@ -41,7 +48,7 @@ namespace PresentationLayer.Controllers
                         _logger.LogError(ex.Message);
                 }
             }
-            return View(data);
+            return View(model);
         }
         #endregion
 
@@ -63,7 +70,7 @@ namespace PresentationLayer.Controllers
             if(id is null) return BadRequest();
             var department = _departmentService.GetDepartmentById(id.Value);
             if (department is null) return NotFound();
-            return View(new DepartmentEditViewModel()
+            return View(new DepartmentViewModel()
             {
                 Name = department.Name,
                 Code = department.Code,
@@ -73,7 +80,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(DepartmentEditViewModel model, [FromRoute] int id)
+        public IActionResult Edit(DepartmentViewModel model, [FromRoute] int id)
         {
             if (ModelState.IsValid)
             {
