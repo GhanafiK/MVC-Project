@@ -95,8 +95,8 @@ namespace PresentationLayer.Controllers
                 PhoneNumber = Employee.PhoneNumber,
                 Salary = Employee.Salary,
                 EmployeeType = Enum.Parse<EmployeeType>(Employee.EmployeeType),
-                DepartmentId = Employee.DepartmentId,
                 Gender = Enum.Parse<Gender>(Employee.Gender),
+                DepartmentId= Employee.DepartmentId,
             });
             #endregion
 
