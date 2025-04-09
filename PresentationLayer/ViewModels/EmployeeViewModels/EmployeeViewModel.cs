@@ -1,16 +1,10 @@
-﻿using DataAccessLayer.Models.Departments;
-using DataAccessLayer.Models.Employees;
+﻿using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.DTOs.EmployeeDTOs
+namespace PresentationLayer.ViewModels.EmployeeViewModels
 {
-    public class CreateEmployeeDTO
+    public class EmployeeViewModel
     {
         [Required]
         [MaxLength(50, ErrorMessage = "Max length should be 50 character")]
@@ -36,6 +30,7 @@ namespace BusinessLogicLayer.DTOs.EmployeeDTOs
         [Display(Name = "Employee Type")]
         public EmployeeType EmployeeType { get; set; }
 
+        [Display(Name="Department")]
         public int? DepartmentId { get; set; }
     }
 }
