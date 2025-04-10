@@ -42,6 +42,7 @@ namespace PresentationLayer.Controllers
                         PhoneNumber = CreatedEmployeeDTO.PhoneNumber,
                         Salary = CreatedEmployeeDTO.Salary,
                         DepartmentId = CreatedEmployeeDTO.DepartmentId,
+                        Image= CreatedEmployeeDTO.Image,
 
                     };
                     int Result = _employeeService.AddEmployee(createdEmployee);

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.Classes
 {
-    public class EmployeeService(IUnitOfWork unitOfWork,IMapper _mapper,IAttachmentService attachmentService) : IEmployeeService
+    public class EmployeeService(IUnitOfWork unitOfWork,IMapper _mapper,IAttachmentService _attachmentService) : IEmployeeService
     {
         public IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking=false)
         {
@@ -43,7 +43,12 @@ namespace BusinessLogicLayer.Services.Classes
 
         public int AddEmployee(CreateEmployeeDTO createEmployeeDTO)
         {
-            unitOfWork.EmployeeRepository.Add(_mapper.Map<CreateEmployeeDTO, Employee>(createEmployeeDTO));
+            var employee = _mapper.Map<CreateEmployeeDTO, Employee>(createEmployeeDTO);
+            if(createEmployeeDTO.Image is not null)
+            {
+                employee.ImageName = _attachmentService.Upload(createEmployeeDTO.Image, "Images");
+            }
+            unitOfWork.EmployeeRepository.Add(employee);
             return unitOfWork.SaveChanges();
         }
 
