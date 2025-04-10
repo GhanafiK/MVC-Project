@@ -1,4 +1,5 @@
 using BusinessLogicLayer.Profiles;
+using BusinessLogicLayer.Services.AttachmentService;
 using BusinessLogicLayer.Services.Classes;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Contexts;
@@ -35,6 +36,7 @@ namespace PresentationLayer
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
             //builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IAttachmentService,AttachmentService>();
 
             #endregion
 

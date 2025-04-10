@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DTOs.EmployeeDTOs;
 using BusinessLogicLayer.Factories;
+using BusinessLogicLayer.Services.AttachmentService;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Repositories.Classes;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.Classes
 {
-    public class EmployeeService(IUnitOfWork unitOfWork,IMapper _mapper) : IEmployeeService
+    public class EmployeeService(IUnitOfWork unitOfWork,IMapper _mapper,IAttachmentService attachmentService) : IEmployeeService
     {
         public IEnumerable<EmployeeDTO> GetAllEmployees(bool withTracking=false)
         {
