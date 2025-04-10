@@ -3,8 +3,10 @@ using BusinessLogicLayer.Services.AttachmentService;
 using BusinessLogicLayer.Services.Classes;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Contexts;
+using DataAccessLayer.Models.IdentityModels;
 using DataAccessLayer.Repositories.Classes;
 using DataAccessLayer.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +39,7 @@ namespace PresentationLayer
             //builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAttachmentService,AttachmentService>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             #endregion
 
@@ -60,7 +63,7 @@ namespace PresentationLayer
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Register}/{id?}");
 
             #endregion
             app.Run();
