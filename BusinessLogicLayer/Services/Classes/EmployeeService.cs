@@ -55,7 +55,13 @@ namespace BusinessLogicLayer.Services.Classes
 
         public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO)
         {
-            unitOfWork.EmployeeRepository.Update(_mapper.Map<UpdatedEmployeeDTO, Employee>(updatedEmployeeDTO));
+            var employee = _mapper.Map<UpdatedEmployeeDTO, Employee>(updatedEmployeeDTO);
+
+            if(updatedEmployeeDTO.Image is not null)
+            {
+                employee.ImageName= _attachmentService.Upload(updatedEmployeeDTO.Image, "Images");
+            }
+            unitOfWork.EmployeeRepository.Update(employee);
             return unitOfWork.SaveChanges();
         }
 

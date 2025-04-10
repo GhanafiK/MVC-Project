@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +30,7 @@ namespace BusinessLogicLayer.DTOs.EmployeeDTOs
         public string? Department { get; set; }
 
         public string? ImageName { get; set; }
+
+        public IFormFile? Image { get; set; }
     }
 }

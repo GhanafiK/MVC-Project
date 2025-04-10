@@ -98,6 +98,7 @@ namespace PresentationLayer.Controllers
                 EmployeeType = Enum.Parse<EmployeeType>(Employee.EmployeeType),
                 Gender = Enum.Parse<Gender>(Employee.Gender),
                 DepartmentId= Employee.DepartmentId,
+                ImageName=Employee.ImageName,
             });
             #endregion
 
@@ -144,6 +145,7 @@ namespace PresentationLayer.Controllers
                         Email = updatedEmployeeDTO.Email,
                         Id = id.Value,
                         DepartmentId= updatedEmployeeDTO.DepartmentId,
+                        Image = updatedEmployeeDTO.Image,
                     };
 
                     var Result = _employeeService.UpdateEmployee(UpdatedEmployee);
