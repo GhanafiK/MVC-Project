@@ -25,12 +25,12 @@ namespace BusinessLogicLayer.Services.Classes
 
         public EmployeeDetailsDTO? GetEmployeeById(int id)
         {
-            var Employee = unitOfWork.EmployeeRepository.GetDepartmentById(id);
+            var Employee = unitOfWork.EmployeeRepository.GetById(id);
             return Employee is null ? null : _mapper.Map<Employee, EmployeeDetailsDTO>(Employee);
         }
         public bool DeleteEmployee(int id)
         {
-            var Employee = unitOfWork.EmployeeRepository.GetDepartmentById(id);
+            var Employee = unitOfWork.EmployeeRepository.GetById(id);
             if (Employee is null) return false;
             else
             {

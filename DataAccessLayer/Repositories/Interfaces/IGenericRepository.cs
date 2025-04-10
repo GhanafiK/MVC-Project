@@ -13,7 +13,7 @@ namespace DataAccessLayer.Repositories.Interfaces
         void Add(T Entity);
         IEnumerable<T> GetAll(bool WithTracking = false);
         IEnumerable<T> GetAll(Expression<Func<T,bool>> Predicate);
-        T? GetDepartmentById(int id);
+        T? GetById(int id);
         void Remove(T Entity);
         void Update(T Entity);
     }

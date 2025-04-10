@@ -20,7 +20,7 @@ namespace BusinessLogicLayer.Services.Classes
 
         public DepartmentDetailsDTO? GetDepartmentById(int id)
         {
-            var department = unitOfWork.DepartmentRepository.GetDepartmentById(id);
+            var department = unitOfWork.DepartmentRepository.GetById(id);
             return department.ToDepartmentDetailsDTO();
         }
 
@@ -38,7 +38,7 @@ namespace BusinessLogicLayer.Services.Classes
 
         public bool DeleteDepartment(int id)
         {
-            var department = unitOfWork.DepartmentRepository.GetDepartmentById(id);
+            var department = unitOfWork.DepartmentRepository.GetById(id);
             if (department == null) return false;
             else
             {

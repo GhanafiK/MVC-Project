@@ -26,7 +26,7 @@ namespace DataAccessLayer.Repositories.Classes
             }
         }
 
-        public T? GetDepartmentById(int id) => _dbContext.Set<T>().Find(id);
+        public T? GetById(int id) => _dbContext.Set<T>().Find(id);
 
         public void Update(T Entity)
         {
