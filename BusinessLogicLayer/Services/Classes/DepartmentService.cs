@@ -10,32 +10,40 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.Classes
 {
-    public class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
+    public class DepartmentService(IUnitOfWork unitOfWork) : IDepartmentService
     {
         public IEnumerable<DepartmentDTO> GetAllDepartments()
         {
-            var departments = _departmentRepository.GetAll();
+            var departments = unitOfWork.DepartmentRepository.GetAll();
             return departments.Select(D => D.ToDepartmentDTO());
         }
 
         public DepartmentDetailsDTO? GetDepartmentById(int id)
         {
-            var department = _departmentRepository.GetDepartmentById(id);
+            var department = unitOfWork.DepartmentRepository.GetDepartmentById(id);
             return department.ToDepartmentDetailsDTO();
         }
 
-        public int AddDepartment(CreatedDepartmentDTO departmentDto) => _departmentRepository.Add(departmentDto.ToEntity());
+        public int AddDepartment(CreatedDepartmentDTO departmentDto)
+        {
+            unitOfWork.DepartmentRepository.Add(departmentDto.ToEntity());
+            return unitOfWork.SaveChanges();
+        }
 
-        public int UpdateDepartment(UpdatedDepartmentDTO departmentDTO) => _departmentRepository.Update(departmentDTO.ToEntity());
+        public int UpdateDepartment(UpdatedDepartmentDTO departmentDTO)
+        {
+            unitOfWork.DepartmentRepository.Update(departmentDTO.ToEntity());
+            return unitOfWork.SaveChanges();
+        }
 
         public bool DeleteDepartment(int id)
         {
-            var department = _departmentRepository.GetDepartmentById(id);
+            var department = unitOfWork.DepartmentRepository.GetDepartmentById(id);
             if (department == null) return false;
             else
             {
-                int Result = _departmentRepository.Remove(department);
-                return Result > 0 ? true : false;
+                unitOfWork.DepartmentRepository.Remove(department);
+                return unitOfWork.SaveChanges() > 0 ? true : false;
             }
         }
     }
