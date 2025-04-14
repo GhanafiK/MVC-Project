@@ -66,6 +66,15 @@ namespace PresentationLayer.Controllers
             ModelState.AddModelError(string.Empty, "Invalid Login");
             return View(loginViewModel);
         }
-            #endregion
+        #endregion
+
+        #region SignOut 
+
+        public new IActionResult SignOut()
+        {
+            _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+        #endregion
     }
 }
