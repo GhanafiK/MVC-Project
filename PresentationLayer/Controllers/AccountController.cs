@@ -26,18 +26,24 @@ namespace PresentationLayer.Controllers
                 Email = ViewModel.Email,
             };
 
-            var Result = _userManager.CreateAsync(User, ViewModel.Password).Result;
-            if (Result.Succeeded)
-                return RedirectToAction("Login");
-            else
-            {
-                foreach (var error in Result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return View(ViewModel);
-            }
+            var ExistUser=_userManager.FindByEmailAsync(User.Email).Result;
 
+            if(ExistUser == null)
+            {
+                var Result = _userManager.CreateAsync(User, ViewModel.Password).Result;
+                if (Result.Succeeded)
+                    return RedirectToAction("Login");
+                else
+                {
+                    foreach (var error in Result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(ViewModel);
+                }
+            }
+            ModelState.AddModelError(string.Empty, "This Email is Registered Before");
+            return View(ViewModel);
         }
         #endregion
 
