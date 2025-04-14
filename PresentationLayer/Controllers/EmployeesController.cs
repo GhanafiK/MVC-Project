@@ -42,6 +42,7 @@ namespace PresentationLayer.Controllers
                         PhoneNumber = CreatedEmployeeDTO.PhoneNumber,
                         Salary = CreatedEmployeeDTO.Salary,
                         DepartmentId = CreatedEmployeeDTO.DepartmentId,
+                        Image= CreatedEmployeeDTO.Image,
 
                     };
                     int Result = _employeeService.AddEmployee(createdEmployee);
@@ -97,6 +98,7 @@ namespace PresentationLayer.Controllers
                 EmployeeType = Enum.Parse<EmployeeType>(Employee.EmployeeType),
                 Gender = Enum.Parse<Gender>(Employee.Gender),
                 DepartmentId= Employee.DepartmentId,
+                ImageName=Employee.ImageName,
             });
             #endregion
 
@@ -143,6 +145,7 @@ namespace PresentationLayer.Controllers
                         Email = updatedEmployeeDTO.Email,
                         Id = id.Value,
                         DepartmentId= updatedEmployeeDTO.DepartmentId,
+                        Image = updatedEmployeeDTO.Image,
                     };
 
                     var Result = _employeeService.UpdateEmployee(UpdatedEmployee);
