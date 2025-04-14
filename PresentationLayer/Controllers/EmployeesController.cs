@@ -3,12 +3,14 @@ using BusinessLogicLayer.Services.Classes;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models.Employees;
 using DataAccessLayer.Models.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.ViewModels.EmployeeViewModels;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PresentationLayer.Controllers
 {
+    [Authorize]
     public class EmployeesController(IEmployeeService _employeeService, ILogger<EmployeesController> _logger, IWebHostEnvironment _environment) : Controller
     {
         public IActionResult Index(string? EmployeeSearchName)

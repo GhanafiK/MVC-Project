@@ -1,11 +1,13 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.DTOs.DepartmentDTOs;
 using BusinessLogicLayer.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.ViewModels.DepartmentViewModels;
 
 namespace PresentationLayer.Controllers
 {
+    [Authorize]
     public class DepartmentsController(IDepartmentService _departmentService,ILogger<DepartmentsController> _logger,IWebHostEnvironment _environment):Controller
     {
         public IActionResult Index()

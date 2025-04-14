@@ -6,6 +6,7 @@ using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Models.IdentityModels;
 using DataAccessLayer.Repositories.Classes;
 using DataAccessLayer.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,10 +40,17 @@ namespace PresentationLayer
             //builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAttachmentService,AttachmentService>();
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             #endregion
-
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(Options =>
+            {
+                Options.LoginPath = "/Account/Login";
+                Options.AccessDeniedPath = "Home/Error";
+                Options.LogoutPath = "/Account/Login";
+            });
             var app = builder.Build();
 
             #region Configure the HTTP request pipeline
@@ -58,7 +66,7 @@ namespace PresentationLayer
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
