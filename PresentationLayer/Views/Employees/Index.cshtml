@@ -37,7 +37,6 @@
         </div>
         <div class="col-4">
             <input type="submit" class="btn btn-outline-success" value="Search" />
-
         </div>
     </form>
 
@@ -78,7 +77,7 @@
                     </td>
                     <td>@employee.Gender</td>
 
-                    <partial name="_ButtonsPartialViewModel" model="employee.Id" />
+                    <partial name="_ButtonsPartialViewModel" model="employee.Id.ToString()" />
                     <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@employee.Id">
                             <i class="fas fa-trash"></i> Delete
