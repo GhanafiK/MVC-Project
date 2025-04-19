@@ -46,7 +46,7 @@
                     <td>@department.Description</td>
                     <td>@department.DateOfCreation</td>
 
-                    <partial name="_ButtonsPartialViewModel" model="department.Id" />
+                    <partial name="_ButtonsPartialViewModel" model="department.Id.ToString()" />
                    
                     @* <td><a class="btn btn-danger" asp-action="Delete" asp-route-Id="@department.Id"><i class="fas fa-trash"></i> Delete</a></td> *@
                     <td>
