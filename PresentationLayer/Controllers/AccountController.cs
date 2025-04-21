@@ -1,12 +1,19 @@
-﻿using DataAccessLayer.Models.IdentityModels;
+﻿ using DataAccessLayer.Models.IdentityModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
+using PresentationLayer.Helper;
 using PresentationLayer.Utilities;
 using PresentationLayer.ViewModels.AccountViewModel;
+using System.Security.Claims;
 
 namespace PresentationLayer.Controllers
 {
-    public class AccountController(UserManager<ApplicationUser> _userManager,SignInManager<ApplicationUser> _signInManager) : Controller
+    public class AccountController(UserManager<ApplicationUser> _userManager,SignInManager<ApplicationUser> _signInManager,IMailService _mailService,ISmsService _smsService) : Controller
     {
         #region Register
         public IActionResult Register() => View();
@@ -73,6 +80,94 @@ namespace PresentationLayer.Controllers
             ModelState.AddModelError(string.Empty, "Invalid Operation");
             return View(loginViewModel);
         }
+
+
+        #region incomplete Login Code
+        //public IActionResult GoogleLogin()
+        //{
+        //    var prop = new AuthenticationProperties
+        //    {
+        //        RedirectUri = Url.Action("GoogleResponse")
+        //    };
+
+        //    return Challenge(prop,GoogleDefaults.AuthenticationScheme);
+        //}
+
+        //public async Task<IActionResult> GoogleResponse()
+        //{
+        //    var result=await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+
+        //    var claims = result.Principal?.Identities.FirstOrDefault()?.Claims.Select(claim => new
+        //    {
+        //        claim.Issuer,
+        //        claim.OriginalIssuer,
+        //        claim.Type,
+        //        claim.Value
+        //    });
+
+        //    return RedirectToAction("Index", "Home");
+        //} 
+        #endregion
+
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleLogin()
+        {
+            // Clear all existing authentication
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            // Configure Google authentication with proper prompt parameter
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("GoogleResponse"),
+                Parameters =
+                {
+                    { "prompt", "select_account" }  // Correct way to set prompt for Google
+                }
+            };
+
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = "Google authentication failed";
+                return RedirectToAction("Login");
+            }
+
+            // Extract user information
+            var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+            var firstName = result.Principal.FindFirstValue(ClaimTypes.GivenName) ?? "Google";
+            var lastName = result.Principal.FindFirstValue(ClaimTypes.Surname) ?? "User";
+
+            // Find or create user
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true,
+                    FirstName = firstName,
+                    LastName = lastName
+                };
+                var createResult = await _userManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                {
+                    TempData["Error"] = "Failed to create user account";
+                    return RedirectToAction("Login");
+                }
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return RedirectToAction("Index", "Home");
+        }
         #endregion
 
         #region SignOut 
@@ -88,6 +183,7 @@ namespace PresentationLayer.Controllers
 
         public IActionResult ForgetPassword() => View();
 
+        [HttpPost]
         public IActionResult SendResetPasswordLink(ForgetPasswordViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -103,7 +199,8 @@ namespace PresentationLayer.Controllers
                         Subject = "Reset Passord",
                         Body = ResetPasswordLink
                     };
-                    EmailSettings.SendEmail(email);
+                    //EmailSettings.SendEmail(email);
+                    _mailService.Send(email);
                     return RedirectToAction(nameof(CheckYourInbox));
                 }
             }
@@ -111,6 +208,28 @@ namespace PresentationLayer.Controllers
             return View(nameof(ForgetPassword),viewModel);
         }
 
+        [HttpPost]
+        public IActionResult SendResetPasswordLinkSms(ForgetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.FindByEmailAsync(viewModel.Email).Result;
+                if (user != null)
+                {
+                    var Token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
+                    var ResetPasswordLink = Url.Action("ResetPassword", "Account", new { email = viewModel.Email, Token }, Request.Scheme) ?? " ";
+                    var SmsMessage = new SmsMessage()
+                    {
+                        PhoneNumber = user.PhoneNumber,
+                        Body = ResetPasswordLink,
+                    };
+                    _smsService.SendSms(SmsMessage);
+                    return Ok("Check Your SMS");
+                }
+            }
+            ModelState.AddModelError(string.Empty, "Invalid Operation");
+            return View(nameof(ForgetPassword), viewModel);
+        }
 
         public IActionResult CheckYourInbox() => View();
 

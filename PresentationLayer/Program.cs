@@ -7,9 +7,13 @@ using DataAccessLayer.Models.IdentityModels;
 using DataAccessLayer.Repositories.Classes;
 using DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using PresentationLayer.Helper;
+using PresentationLayer.Settings;
 
 namespace PresentationLayer
 {
@@ -48,9 +52,34 @@ namespace PresentationLayer
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(Options =>
             {
                 Options.LoginPath = "/Account/Login";
-                Options.AccessDeniedPath = "Home/Error";
+                Options.AccessDeniedPath = "/Home/Error";
                 Options.LogoutPath = "/Account/Login";
-            });
+            }).AddGoogle(o =>
+            {
+                o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                o.SaveTokens = true;
+
+            }); 
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<IMailService, MailService>();
+            builder.Services.Configure<SmsSettings>(builder.Configuration.GetSection("Twilio"));
+            builder.Services.AddTransient<ISmsService, SmsService>();
+
+            #region if we need the Authentication to be only work with google account
+            //builder.Services.AddAuthentication(o =>
+            //{
+            //    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    o.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            //}).AddGoogle(o =>
+            //{
+            //    IConfiguration GoogleAuthSection = builder.Configuration.GetSection("Authentication:Google");
+            //    o.ClientId = GoogleAuthSection["ClientId"];
+            //    o.ClientSecret = GoogleAuthSection["ClientSecret"];
+
+            //}); 
+            #endregion
+
             var app = builder.Build();
 
             #region Configure the HTTP request pipeline
@@ -58,7 +87,6 @@ namespace PresentationLayer
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

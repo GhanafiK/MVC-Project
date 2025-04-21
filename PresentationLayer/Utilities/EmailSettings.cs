@@ -7,9 +7,9 @@ namespace PresentationLayer.Utilities
     {
         public static void SendEmail(Email email)
         {
-            var Client=new SmtpClient("smtp.gmail.com", 587);
+            var Client = new SmtpClient("smtp.gmail.com", 587);
             Client.EnableSsl = true;
-            Client.Credentials = new NetworkCredential("gamalhanafi26@gmail.com", "lmckygbucehtpvyy");
+            Client.Credentials = new NetworkCredential("gamalhanafi26@gmail.com", "jvibupailgkcsdtd");
             Client.Send("gamalhanafi26@gmail.com", email.TO, email.Subject, email.Body);
         }
     }
