@@ -24,6 +24,9 @@
                 <div class="form-check">
                     <input type="hidden" asp-for="Users[i].UserId" />
                     <input type="hidden" asp-for="Users[i].UserName" />
+                    <input type="hidden" asp-for="Users[i].FirstName" />
+                    <input type="hidden" asp-for="Users[i].LastName" />
+                    <input type="hidden" asp-for="Users[i].Email" />
                     <input asp-for="Users[i].IsSelected" class="form-check-input" />
                     <label class="form-check-label">@Model.Users[i].FirstName @Model.Users[i].LastName - (@Model.Users[i].Email) </label>
                 </div>
