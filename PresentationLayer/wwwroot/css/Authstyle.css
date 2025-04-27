@@ -39,8 +39,12 @@ table {
 }
 
 /*-- start editing from here --*/
-a {
+a{
     text-decoration: none;
+}
+
+.my-form {
+    text-align: center
 }
 
 .txt-rt {

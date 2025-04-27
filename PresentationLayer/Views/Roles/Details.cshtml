@@ -39,7 +39,7 @@
                     {
                         if (Model.Users[i].IsSelected)
                         {
-                            <p class="mb-1"> <i class="fa-solid fa-user text-warning"></i>  @Model.Users[i].UserName</p>
+                            <p class="mb-1"> <i class="fa-solid fa-user text-warning"></i>  @Model.Users[i].FirstName @Model.Users[i].LastName - (@Model.Users[i].Email)</p>
                         }
                     }
                 }

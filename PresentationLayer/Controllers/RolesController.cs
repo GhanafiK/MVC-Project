@@ -40,6 +40,9 @@ namespace PresentationLayer.Controllers
                 {
                     UserId = U.Id,
                     UserName = U.UserName,
+                    FirstName = U.FirstName,
+                    LastName = U.LastName,
+                    Email=U.Email,
                     IsSelected = false // Default to not selected for new roles
                 }).ToList()
             });
@@ -115,8 +118,12 @@ namespace PresentationLayer.Controllers
                 Name = role.Name ?? " ",
                 Users = Users.Select(U => new UserRoleViewModel()
                 {
+
                     UserId = U.Id,
                     UserName = U.UserName,
+                    FirstName = U.FirstName,
+                    LastName = U.LastName,
+                    Email=U.Email,
                     IsSelected = _userManager.IsInRoleAsync(U, role.Name).Result
                 }).ToList()
             };
@@ -138,6 +145,9 @@ namespace PresentationLayer.Controllers
                 {
                     UserId= U.Id,
                     UserName=U.UserName,
+                    FirstName = U.FirstName,
+                    LastName=U.LastName,
+                    Email=U.Email,
                     IsSelected=_userManager.IsInRoleAsync(U,role.Name).Result
                 }).ToList()
             });

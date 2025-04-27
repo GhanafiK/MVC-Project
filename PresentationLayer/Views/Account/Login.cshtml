@@ -6,8 +6,8 @@
 }
 
 <div class="main-agileinfo">
-    <div class="agileits-top">
-        <form asp-action="Login" method="post">
+    <div class="agileits-top" >
+        <form asp-action="Login" method="post"  >
             <div asp-validation-summary="ModelOnly"></div>
 
             <input asp-for="Email" placeholder="Email" required="">
@@ -25,10 +25,16 @@
                 <div class="clear"> </div>
             </div>
             <span asp-validation-for="RememberMe"></span>
-            <input type="submit" value="SIGNIN">
+            <input type="submit" value="SIGNIN" >
+            
+            
         </form>
         <p>Don't have an Account? <a asp-action="Register"> Register Now!</a></p>
         <p> <a asp-action="ForgetPassword">Forget Password</a></p>
+        <p class="my-2 fw-bold text-black">OR</p>
+        <div class="text-center">
+            <a asp-action="GoogleLogin" class="btn btn-light"><i class="fa-brands fa-google text-danger"></i>   Login With Google </a>
+        </div>
 
     </div>
 </div>
