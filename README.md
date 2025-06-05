@@ -74,7 +74,6 @@ A secure and scalable employee management system built with ASP.NET MVC that han
     <img src="screenshots/All Roles.png" width="300px" height="200px" alt="All Roles">
     <img src="screenshots/Create Role.png" width="300px" height="200px" alt="Create Role">
     <img src="screenshots/Edit Role.png" width="300px" height="200px" alt="Edit Role">
-    <img src="screenshots/Delete Role.png" width="300px" height="200px" alt="Delete Role">
 </div>
 
 ## Contact with me
